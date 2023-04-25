@@ -1,5 +1,6 @@
 package com.authorization.rest;
 
+import com.authorization.dto.UserDto;
 import com.authorization.model.UserEntity;
 import com.authorization.security.JwtTokenProvider;
 import com.authorization.service.UserService;
@@ -25,6 +26,7 @@ public class AuthenticationRestController {
     private final AuthenticationManager authenticationManager;
     private UserService userService;
     private JwtTokenProvider jwtTokenProvider;
+
 
     public AuthenticationRestController(AuthenticationManager authenticationManager, UserService userService, JwtTokenProvider jwtTokenProvider) {
         this.authenticationManager = authenticationManager;
@@ -56,6 +58,11 @@ public class AuthenticationRestController {
     @GetMapping("/validate")
     public Boolean validate2(@RequestParam String token){
         return jwtTokenProvider.validateToken(token);
+    }
+
+    @PostMapping("/signup")
+    public UserDto createAccount(@RequestBody UserDto userDto) {
+        return userService.save(userDto);
     }
 
 
