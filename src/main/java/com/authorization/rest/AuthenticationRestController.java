@@ -60,9 +60,14 @@ public class AuthenticationRestController {
         return jwtTokenProvider.validateToken(token);
     }
 
+    @GetMapping("/username")
+    public String getUser(@RequestParam String token){
+        return jwtTokenProvider.getUserName(token);
+    }
+
     @PostMapping("/signup")
-    public UserDto createAccount(@RequestBody UserDto userDto) {
-        return userService.save(userDto);
+    public void createAccount(@RequestBody UserDto userDto) {
+        userService.save(userDto);
     }
 
 

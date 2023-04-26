@@ -27,7 +27,7 @@ public class UserConverter {
         return UserEntity.builder()
                 .username(dto.getUsername())
                 .password(new BCryptPasswordEncoder(12).encode(dto.getPassword()))
-                .email(GAG)
+                .email(dto.getEmail())
                 .role(Role.USER)
                 .status(Status.ACTIVE)
                 .created(new Timestamp(System.currentTimeMillis()))

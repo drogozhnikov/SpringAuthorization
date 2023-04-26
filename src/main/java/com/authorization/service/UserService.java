@@ -23,7 +23,6 @@ public class UserService {
 
     public UserDto save(UserDto input){
         UserEntity savedEntity = usersRepository.save(converter.convertToEntity(input));
-
         return converter.convertToDto(savedEntity);
     }
 
