@@ -24,4 +24,12 @@ public class AdminService {
         }
         return new ArrayList<>();
     }
+
+    public AdminDto update(AdminDto dto){
+        UserEntity entity = repository.findUserByUsername(dto.getUsername());
+        entity.setStatus(dto.getStatus());
+        entity.setRole(dto.getRole());
+        repository.save(entity);
+        return converter.convertToDto(entity);
+    }
 }

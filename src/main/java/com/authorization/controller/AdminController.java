@@ -2,10 +2,7 @@ package com.authorization.controller;
 
 import com.authorization.dto.AdminDto;
 import com.authorization.service.AdminService;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.RequestHeader;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
@@ -24,4 +21,10 @@ public class AdminController {
     public List<AdminDto> getAccounts() {
         return service.readAll();
     }
+
+    @PutMapping("/")
+    public AdminDto updateUnit(@RequestBody AdminDto unitDto) {
+        return service.update(unitDto);
+    }
+
 }
