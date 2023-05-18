@@ -23,4 +23,12 @@ public class AuthExceptionHandler extends ResponseEntityExceptionHandler {
         headers.clearContentHeaders();
         return handleExceptionInternal(ex, ex.getMessage(), headers, ex.getStatus(), request);
     }
+
+    @ExceptionHandler(value = {AuthUserException.class})
+    protected ResponseEntity<Object> handleConflict(AuthUserException ex, WebRequest request) {
+        HttpHeaders headers = new HttpHeaders();
+        headers.clearContentHeaders();
+        return handleExceptionInternal(ex, ex.getMessage(), headers, ex.getStatus(), request);
+    }
+
 }

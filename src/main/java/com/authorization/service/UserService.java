@@ -1,10 +1,12 @@
 package com.authorization.service;
 
 import com.authorization.dto.UserDto;
+import com.authorization.exception.AuthUserException;
 import com.authorization.model.UserEntity;
 import com.authorization.repository.UsersRepository;
 import com.authorization.service.converter.UserConverter;
 import lombok.AllArgsConstructor;
+import org.springframework.http.HttpStatus;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
@@ -22,7 +24,12 @@ public class UserService {
     }
 
     public UserDto save(UserDto input){
-        UserEntity savedEntity = usersRepository.save(converter.convertToEntity(input));
+        UserEntity savedEntity = new UserEntity();
+        try{
+             usersRepository.save(converter.convertToEntity(input));
+        }catch (Exception e){
+            throw new AuthUserException("existing username or email", HttpStatus.BAD_REQUEST);
+        }
         return converter.convertToDto(savedEntity);
     }
 
