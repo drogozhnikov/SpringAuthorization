@@ -27,4 +27,9 @@ public class AdminController {
         return service.update(unitDto);
     }
 
+    @DeleteMapping("/{id}")
+    public void deleteAccount(@PathVariable("id") int id) {
+        service.remove(id);
+    }
+
 }

@@ -32,4 +32,11 @@ public class AdminService {
         repository.save(entity);
         return converter.convertToDto(entity);
     }
+
+    public void remove(int id){
+        UserEntity entity = repository.findUserEntityById(id);
+        if(entity!=null){
+            repository.delete(entity);
+        }
+    }
 }
