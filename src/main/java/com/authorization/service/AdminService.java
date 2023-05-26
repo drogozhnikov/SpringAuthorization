@@ -17,15 +17,15 @@ public class AdminService {
     private UsersRepository repository;
     private AdminConverter converter;
 
-    public List<AdminDto> readAll(){
+    public List<AdminDto> readAll() {
         List<UserEntity> userEntities = repository.findAll();
-        if(userEntities.size()>0){
+        if (userEntities.size() > 0) {
             return converter.convertAllToDto(userEntities);
         }
         return new ArrayList<>();
     }
 
-    public AdminDto update(AdminDto dto){
+    public AdminDto update(AdminDto dto) {
         UserEntity entity = repository.findUserByUsername(dto.getUsername());
         entity.setStatus(dto.getStatus());
         entity.setRole(dto.getRole());
@@ -33,9 +33,9 @@ public class AdminService {
         return converter.convertToDto(entity);
     }
 
-    public void remove(int id){
+    public void remove(int id) {
         UserEntity entity = repository.findUserEntityById(id);
-        if(entity!=null){
+        if (entity != null) {
             repository.delete(entity);
         }
     }

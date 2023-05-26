@@ -4,7 +4,6 @@ import com.authorization.dto.UserDto;
 import com.authorization.model.UserEntity;
 import com.authorization.security.JwtTokenProvider;
 import com.authorization.service.UserService;
-
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.authentication.AuthenticationManager;
@@ -35,10 +34,10 @@ public class AuthenticationRestController {
     }
 
     @PostMapping("/login")
-    public ResponseEntity<?> authenticate(@RequestBody AuthenticationRequestDTO request){
-        try{
+    public ResponseEntity<?> authenticate(@RequestBody AuthenticationRequestDTO request) {
+        try {
             authenticationManager.authenticate(new UsernamePasswordAuthenticationToken(request.getUsername(), request.getPassword()));
-            UserEntity user = userService.findUserByUserName(request.getUsername()).orElseThrow(()-> new UsernameNotFoundException("User not found"));
+            UserEntity user = userService.findUserByUserName(request.getUsername()).orElseThrow(() -> new UsernameNotFoundException("User not found"));
             String token = jwtTokenProvider.createToken(request.getUsername(), user.getRole().name());
             Map<Object, Object> response = new HashMap<>();
             response.put("username", request.getUsername());
@@ -46,24 +45,24 @@ public class AuthenticationRestController {
             response.put("user_status", user.getStatus());
             response.put("token", token);
             return ResponseEntity.ok(response);
-        }catch (AuthenticationException e){
+        } catch (AuthenticationException e) {
             return new ResponseEntity<>("Invalid userName or password", HttpStatus.FORBIDDEN);
         }
     }
 
     @PostMapping("/logout")
-    public void logout(HttpServletRequest request, HttpServletResponse response){
+    public void logout(HttpServletRequest request, HttpServletResponse response) {
         SecurityContextLogoutHandler securityContextLogoutHandler = new SecurityContextLogoutHandler();
-        securityContextLogoutHandler.logout(request,response,null);
+        securityContextLogoutHandler.logout(request, response, null);
     }
 
     @GetMapping("/validate")
-    public Boolean validate2(@RequestParam String token){
+    public Boolean validate2(@RequestParam String token) {
         return jwtTokenProvider.validateToken(token);
     }
 
     @GetMapping("/username")
-    public String getUser(@RequestParam String token){
+    public String getUser(@RequestParam String token) {
         return jwtTokenProvider.getUserName(token);
     }
 

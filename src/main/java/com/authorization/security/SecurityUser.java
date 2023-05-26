@@ -61,7 +61,7 @@ public class SecurityUser implements UserDetails {
         return isActive;
     }
 
-    public static UserDetails fromUserEntity(UserEntity user){
+    public static UserDetails fromUserEntity(UserEntity user) {
         return new User(
                 user.getUsername(), user.getPassword(),
                 user.getStatus().equals(Status.ACTIVE),
